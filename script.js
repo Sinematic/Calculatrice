@@ -8,7 +8,6 @@ const on = document.getElementById("on");
 const off = document.getElementById("off");
 
 
-
 on.addEventListener("click", function() {
 
     if(started === false)
@@ -38,8 +37,8 @@ function switchState() {
 
         
         result.innerText = "";
-        result.backgroundColor = "#24282C";
-        result.borderColor = "#24282C"
+        result.style.backgroundColor = "#24282C";
+        result.style.borderColor = "#24282C"
 
         for (let i = 0; i < buttons.length; i++)
         {
@@ -47,9 +46,6 @@ function switchState() {
             button.style.backgroundColor = "#4b4848";
 
         }
-
-        on.style.backgroundColor = "#4b4848";
-
 
     } else {
 
@@ -64,8 +60,6 @@ function switchState() {
             const button = buttons[i];
             button.style.backgroundColor = "#c4c4c4";
         }
-
-        off.style.backgroundColor = "#4b4848";
 
     }
 }
