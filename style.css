@@ -92,8 +92,9 @@ main {
 }
 
 #result {
-    width: 95%;
+    width: 100%;
     margin: auto;
+    box-sizing: border-box;
     height: 126px;
     font-size: 2.8em;
     padding: 12px;
