@@ -1,12 +1,11 @@
 const calculator = document.getElementById("calculator");
-const result = document.getElementById("result");
 const buttons = document.querySelectorAll("button");
+const result = document.getElementById("result");
 
 let started = false;
 
 const on = document.getElementById("on");
 const off = document.getElementById("off");
-
 
 on.addEventListener("click", function() {
 
@@ -16,7 +15,6 @@ on.addEventListener("click", function() {
     }
 
 });
-
 
 off.addEventListener("click", function(){
     
