@@ -1,7 +1,13 @@
+import { Calculator } from "./Calculator.js";
+
 const calculator = document.getElementById("calculator");
 const buttons = document.querySelectorAll("button");
 const result = document.getElementById("result");
+const operators = ["+", "-", "*", "/", "%", ""];
 
+let temp1 = undefined;
+let temp2 = undefined;
+let operator = undefined;
 let started = false;
 
 const on = document.getElementById("on");
@@ -145,6 +151,14 @@ zero.addEventListener("click", function() {
 
 });
 
+const float = document.getElementById("clear");
+
+float.addEventListener("click", function() {
+
+    result.innerText = "";
+
+});
+
 const add = document.getElementById("plus");
 
 add.addEventListener("click", function() {
@@ -165,7 +179,7 @@ const multiply = document.getElementById("multiply");
 
 multiply.addEventListener("click", function() {
 
-    result.innerText += "*";
+    result.innerText += "x";
 
 });
 
@@ -181,7 +195,7 @@ const root = document.getElementById("square-root");
 
 root.addEventListener("click", function() {
 
-    result.innerText += "lkmkjmlkjkj";
+    result.innerText += "√";
 
 });
 
@@ -201,3 +215,5 @@ clear.addEventListener("click", function() {
     result.innerText = "";
 
 });
+
+
