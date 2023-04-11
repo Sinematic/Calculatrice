@@ -3,15 +3,22 @@ import { Calculator } from "./Calculator.js";
 const calculator = document.getElementById("calculator");
 const buttons = document.querySelectorAll("button");
 const result = document.getElementById("result");
-const operators = ["+", "-", "*", "/", "%", ""];
+const previousNumber = document.createElement("p");
+const sign = document.createElement("span");
 
-let temp1 = undefined;
-let temp2 = undefined;
-let operator = undefined;
+const calculus = new Calculator();
+
 let started = false;
 
 const on = document.getElementById("on");
 const off = document.getElementById("off");
+
+previousNumber.setAttribute("id", "number1");
+calculator.appendChild(previousNumber);
+
+sign.setAttribute("id", "operator");
+calculator.appendChild(sign);
+
 
 on.addEventListener("click", function() {
 
@@ -39,6 +46,8 @@ function switchState() {
         started = false;
         
         result.innerText = "";
+        previousNumber.innerText = "";
+        sign.innerText = "";
         result.style.backgroundColor = "#24282C";
         result.style.borderColor = "#24282C"
 
@@ -56,6 +65,8 @@ function switchState() {
         started = true;
 
         result.innerText = "";
+        previousNumber.innerText = "";
+        sign.innerText = "";
         result.style.backgroundColor = "cornsilk";
         result.style.borderColor = "#1DA1F2";
         
@@ -70,150 +81,126 @@ function switchState() {
     }
 }
 
+function updateOperator(operator) {
+
+    if (previousNumber.innerText === "") {
+
+        if (result.innerText !== "") {
+
+            calculus.setNumber1(result.innerText);
+            calculus.setOperator(operator);
+            previousNumber.innerText = result.innerText;
+            result.innerText = "";
+            sign.innerText = operator;
+
+        } else return
+
+
+    } else {
+
+        if (result.innerText !== "") {
+
+            calculus.setNumber2(result.innerText);
+            calculus.calculate();
+            previousNumber.innerText = "";
+            console.log("voiciiiiii" + calculus.number1);
+            result.innerText = calculus.number1;
+            sign.innerText = "";
+        }
+    }
+}
+
+function updateNumber(number, Calculator) {
+
+    console.log(Calculator.obtained);
+
+    if (Calculator.obtained) {
+
+        if (Calculator.operator !== undefined) {
+
+            Calculator.setNumber1(result.innerText);
+            Calculator.obtained = false;
+            previousNumber.innerText = Calculator.number1;
+            result.innerText = number;
+
+        } else console.log("Assign an operator first !");
+
+        
+
+    } else result.innerText += number;
+
+
+    
+}
+
+function setResult() {
+
+    calculus.setNumber2(result.innerText);
+    calculus.calculate();
+    previousNumber.innerText = "";
+    sign.innerText = "";
+    result.innerText = calculus.number1;
+}
 
 const one = document.getElementById("1");
-
-one.addEventListener("click", function() {
-
-    result.innerText += "1";
-
-});
-
 const two = document.getElementById("2");
-
-two.addEventListener("click", function() {
-
-    result.innerText += "2";
-
-});
-
 const three = document.getElementById("3");
-
-three.addEventListener("click", function() {
-
-    result.innerText += "3";
-
-});
-
 const four = document.getElementById("4");
-
-four.addEventListener("click", function() {
-
-    result.innerText += "4";
-
-});
-
 const five = document.getElementById("5");
-
-five.addEventListener("click", function() {
-
-    result.innerText += "5";
-
-});
-
 const six = document.getElementById("6");
-
-six.addEventListener("click", function() {
-
-    result.innerText += "6";
-
-});
-
 const seven = document.getElementById("7");
-
-seven.addEventListener("click", function() {
-
-    result.innerText += "7";
-
-});
-
 const eight = document.getElementById("8");
-
-eight.addEventListener("click", function() {
-
-    result.innerText += "8";
-
-});
-
 const nine = document.getElementById("9");
-
-nine.addEventListener("click", function() {
-
-    result.innerText += "9";
-
-});
-
 const zero = document.getElementById("0");
 
-zero.addEventListener("click", function() {
-
-    result.innerText += "0";
-
-});
-
-const float = document.getElementById("clear");
+one.addEventListener("click", () => updateNumber("1", calculus));
+two.addEventListener("click", () => updateNumber("2", calculus));
+three.addEventListener("click", () => updateNumber("3", calculus));
+four.addEventListener("click", () => updateNumber("4", calculus));
+five.addEventListener("click", () => updateNumber("5", calculus));
+six.addEventListener("click", () => updateNumber("6", calculus));
+seven.addEventListener("click", () => updateNumber("7", calculus));
+eight.addEventListener("click", () => updateNumber("8", calculus));
+nine.addEventListener("click", () => updateNumber("9", calculus));
+zero.addEventListener("click", () => updateNumber("0", calculus));
 
 float.addEventListener("click", function() {
 
-    result.innerText = "";
-
+    result.innerText += ".";
 });
 
+const float = document.getElementById("float");
 const add = document.getElementById("plus");
-
-add.addEventListener("click", function() {
-
-    result.innerText += "+";
-
-});
-
 const minus = document.getElementById("minus");
-
-minus.addEventListener("click", function() {
-
-    result.innerText += "-";
-
-});
-
 const multiply = document.getElementById("multiply");
-
-multiply.addEventListener("click", function() {
-
-    result.innerText += "x";
-
-});
-
 const divide = document.getElementById("divide");
-
-divide.addEventListener("click", function() {
-
-    result.innerText += "/";
-
-});
-
 const root = document.getElementById("square-root");
-
-root.addEventListener("click", function() {
-
-    result.innerText += "√";
-
-});
-
+const modulo = document.getElementById("modulo");
 const equals = document.getElementById("equals");
+const clear = document.getElementById("clear");
+
+add.addEventListener("click", () => updateOperator("+"));
+minus.addEventListener("click", () => updateOperator("-"));
+multiply.addEventListener("click", () => updateOperator("*"));
+divide.addEventListener("click", () => updateOperator("/"));
+root.addEventListener("click", () => updateOperator("sqrt"));
+modulo.addEventListener("click", () => updateOperator("%"));
+
 
 equals.addEventListener("click", function() {
 
-    console.log(parseInt(result.innerText));
-    result.innerText = parseInt(result.innerText);
+    if (started) {
 
+        if (previousNumber.innerText !== "" && result.innerText !== "") {
+         
+            setResult();
+        }
+    }
 });
-
-const clear = document.getElementById("clear");
 
 clear.addEventListener("click", function() {
 
     result.innerText = "";
-
+    previousNumber.innerText = "";
+    sign.innerText = "";
 });
-
-
