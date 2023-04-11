@@ -20,84 +20,73 @@ export class Calculator {
         if (this.operator === undefined) {
 
             this.operator = operator;
-        }
+
+        } else return
     }
 
     add() {
 
-        if (this.number1 !== undefined && this.number2 !== undefined) {
+        if (this.number1 && this.number2) {
 
             this.number1 += this.number2;
             this.number2 = undefined;
             this.operator = undefined;
             this.obtained = true;
 
-            console.log(this.number1, this.number2);
+            console.log("Number1 " + this.number1, "Number2 " + this.number2);
 
-        } else {
-            console.log("Arithmetic error !");
-        }
+        } else console.log("Arithmetic error !");
     }
 
     substract() {
         
-        if (this.number1 !== undefined && this.number2 !== undefined) {
+        if (this.number1 && this.number2) {
 
             this.number1 -= this.number2;
             this.number2 = undefined;
             this.operator = undefined;
             this.obtained = true;
 
-        } else {
-            console.log("Arithmetic error !");
-        }
+        } else console.log("Arithmetic error !");
     }
 
     multiply() {
 
-        if (this.number1 !== undefined && this.number2 !== undefined) {
+        if (this.number1 && this.number2) {
 
-            console.log(this.number1, this.number2);
-            this.number1 = this.number1 * this.number2;
-            console.log(this.number1, this.number2);
+            this.number1 *= this.number2;
             this.number2 = undefined;
             this.operator = undefined;
             this.obtained = true;
-            
-        } else {
-            console.log("Arithmetic error! Both numbers should be defined.");
-        }
-        
+
+        } else console.log("Arithmetic error! Both numbers should be defined.");        
     }
 
     divide() {
  
-        if (this.number1 !== undefined && this.number2 !== undefined) {
+        if (this.number1 && this.number2) {
 
             this.number1 /= this.number2;
             this.number2 = undefined;
             this.operator = undefined;
             this.obtained = true;
 
-        } else {
-            console.log("Arithmetic error !");
-        }
+        } else console.log("Arithmetic error !");
     }
 
     squareRoot() {
 
-        if (this.number1 !== undefined) {
+        if (this.number1) {
 
             this.operator = undefined;
-            this.obtained = true;
             this.number1 = Math.sqrt(this.number1);
             this.obtained = true;
         }
     }
 
-    modulo() {
+    modulo() { // Doesn't exist on current Calculator
 
-        if (this.number1 !== undefined && this.number2 !== undefined) {
+        if (this.number1 && this.number2) {
 
             if (this.number1 !== 0 && this.number2 !== 0) {
 
@@ -133,6 +122,13 @@ export class Calculator {
             default :
                 console.log("MAJOR ERROR !");           
         }
+    }
+
+    reset() {
+        this.number1 = undefined;
+        this.number2 = undefined;
+        this.operator = undefined;
+        this.obtained = false;
     }
 
 }

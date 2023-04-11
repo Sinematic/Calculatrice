@@ -4,20 +4,38 @@ const calculator = document.getElementById("calculator");
 const buttons = document.querySelectorAll("button");
 const result = document.getElementById("result");
 const previousNumber = document.createElement("p");
-const sign = document.createElement("span");
+const arithmeticOperator = document.createElement("span");
+const on = document.getElementById("on");
+const off = document.getElementById("off");
+const one = document.getElementById("1");
+const two = document.getElementById("2");
+const three = document.getElementById("3");
+const four = document.getElementById("4");
+const five = document.getElementById("5");
+const six = document.getElementById("6");
+const seven = document.getElementById("7");
+const eight = document.getElementById("8");
+const nine = document.getElementById("9");
+const zero = document.getElementById("0");
+const float = document.getElementById("float");
+const add = document.getElementById("plus");
+const minus = document.getElementById("minus");
+const multiply = document.getElementById("multiply");
+const divide = document.getElementById("divide");
+const root = document.getElementById("square-root");
+const equals = document.getElementById("equals");
+const clear = document.getElementById("clear");
 
 const calculus = new Calculator();
 
 let started = false;
 
-const on = document.getElementById("on");
-const off = document.getElementById("off");
 
 previousNumber.setAttribute("id", "number1");
 calculator.appendChild(previousNumber);
 
-sign.setAttribute("id", "operator");
-calculator.appendChild(sign);
+arithmeticOperator.setAttribute("id", "operator");
+calculator.appendChild(arithmeticOperator);
 
 
 on.addEventListener("click", function() {
@@ -39,6 +57,8 @@ off.addEventListener("click", function(){
 });
 
 
+const body = document.querySelector("body");
+
 function switchState() {
 
     if (started)
@@ -47,7 +67,7 @@ function switchState() {
         
         result.innerText = "";
         previousNumber.innerText = "";
-        sign.innerText = "";
+        arithmeticOperator.innerText = "";
         result.style.backgroundColor = "#24282C";
         result.style.borderColor = "#24282C"
 
@@ -66,7 +86,8 @@ function switchState() {
 
         result.innerText = "";
         previousNumber.innerText = "";
-        sign.innerText = "";
+        arithmeticOperator.innerText = "";
+        calculus.reset();
         result.style.backgroundColor = "cornsilk";
         result.style.borderColor = "#1DA1F2";
         
@@ -81,77 +102,91 @@ function switchState() {
     }
 }
 
-function updateOperator(operator) {
+function setResultAddOperator(operator) {
 
-    if (previousNumber.innerText === "") {
+    // console.info("Calculator started : " + started);
+    if (started) {
 
-        if (result.innerText !== "") {
+        if (calculus.operator === undefined) {
 
-            calculus.setNumber1(result.innerText);
-            calculus.setOperator(operator);
-            previousNumber.innerText = result.innerText;
-            result.innerText = "";
-            sign.innerText = operator;
+            if (result.innerText === "" && previousNumber.innerText === "") {
+    
+                console.info("Please define number first !");
+                body.style.backgroundColor = "blue";
+            
+            } else {
+    
+                if (result.innerText !== "" ) {
+    
+                    if (previousNumber.innerText === "") {
 
-        } else return
+                        calculus.setNumber1(result.innerText);
+                        calculus.setOperator(operator);
+                        result.innerText = "";
+                        previousNumber.innerText = calculus.number1;
+                        arithmeticOperator.innerText = calculus.operator;
+                        body.style.backgroundColor = "yellow";
 
+                    } else {
 
-    } else {
+                        updateOperator(operator);
 
-        if (result.innerText !== "") {
-
-            calculus.setNumber2(result.innerText);
-            calculus.calculate();
-            previousNumber.innerText = "";
-            console.log("voiciiiiii" + calculus.number1);
-            result.innerText = calculus.number1;
-            sign.innerText = "";
+                    }
+    
+                }
+            }
+    
+        } else {
+    
+            if (result.innerText !== "" && previousNumber.innerText !== "") {
+    
+                updateOperator(operator);
+                
+            } else console.log("Only one arithmetic operator at a time !");
         }
     }
+
 }
 
 function updateNumber(number, Calculator) {
 
-    console.log(Calculator.obtained);
-
     if (Calculator.obtained) {
 
-        if (Calculator.operator !== undefined) {
+        Calculator.setNumber1(result.innerText);
+        Calculator.obtained = false;
+        previousNumber.innerText = Calculator.number1;
+        result.innerText = number;
 
-            Calculator.setNumber1(result.innerText);
-            Calculator.obtained = false;
-            previousNumber.innerText = Calculator.number1;
-            result.innerText = number;
+    } else {
 
-        } else console.log("Assign an operator first !");
-
-        
-
-    } else result.innerText += number;
-
-
-    
+        result.innerText += number;
+    }
+  
 }
 
 function setResult() {
 
+    calculus.setNumber1(previousNumber.innerText);
     calculus.setNumber2(result.innerText);
     calculus.calculate();
-    previousNumber.innerText = "";
-    sign.innerText = "";
     result.innerText = calculus.number1;
+    previousNumber.innerText = "";
+    arithmeticOperator.innerText = "";
+    console.info("num1 :" + calculus.number1);
+    console.info("num2 :" + calculus.number2);
 }
 
-const one = document.getElementById("1");
-const two = document.getElementById("2");
-const three = document.getElementById("3");
-const four = document.getElementById("4");
-const five = document.getElementById("5");
-const six = document.getElementById("6");
-const seven = document.getElementById("7");
-const eight = document.getElementById("8");
-const nine = document.getElementById("9");
-const zero = document.getElementById("0");
+function updateOperator(operator) {
+    
+    calculus.setNumber1(previousNumber.innerText);
+    calculus.setNumber2(result.innerText);
+    calculus.calculate();
+    calculus.setOperator(operator);
+    arithmeticOperator.innerText = calculus.operator;
+    result.innerText = calculus.number1;
+    previousNumber.innerText = "";
+    body.style.backgroundColor = "green";
+}
 
 one.addEventListener("click", () => updateNumber("1", calculus));
 two.addEventListener("click", () => updateNumber("2", calculus));
@@ -163,44 +198,39 @@ seven.addEventListener("click", () => updateNumber("7", calculus));
 eight.addEventListener("click", () => updateNumber("8", calculus));
 nine.addEventListener("click", () => updateNumber("9", calculus));
 zero.addEventListener("click", () => updateNumber("0", calculus));
-
+    
 float.addEventListener("click", function() {
-
-    result.innerText += ".";
+    
+        let temp = result.innerText;
+    
+        if (temp.indexOf(".") > -1) {
+            console.log("Only 1 float is possible !");
+    
+        } else result.innerText += ".";
 });
-
-const float = document.getElementById("float");
-const add = document.getElementById("plus");
-const minus = document.getElementById("minus");
-const multiply = document.getElementById("multiply");
-const divide = document.getElementById("divide");
-const root = document.getElementById("square-root");
-const modulo = document.getElementById("modulo");
-const equals = document.getElementById("equals");
-const clear = document.getElementById("clear");
-
-add.addEventListener("click", () => updateOperator("+"));
-minus.addEventListener("click", () => updateOperator("-"));
-multiply.addEventListener("click", () => updateOperator("*"));
-divide.addEventListener("click", () => updateOperator("/"));
-root.addEventListener("click", () => updateOperator("sqrt"));
-modulo.addEventListener("click", () => updateOperator("%"));
-
-
+    
+add.addEventListener("click", () => setResultAddOperator("+"));
+minus.addEventListener("click", () => setResultAddOperator("-"));
+multiply.addEventListener("click", () => setResultAddOperator("*"));
+divide.addEventListener("click", () => setResultAddOperator("/"));
+root.addEventListener("click", () => setResultAddOperator("sqrt"));
+    
 equals.addEventListener("click", function() {
-
-    if (started) {
-
-        if (previousNumber.innerText !== "" && result.innerText !== "") {
-         
-            setResult();
+    
+        if (started) {
+    
+            if (previousNumber.innerText !== "" && result.innerText !== "" && calculus.operator) {
+             
+                setResult();
+            } else console.log("Fill the numbers first !");
         }
-    }
 });
-
+    
 clear.addEventListener("click", function() {
-
-    result.innerText = "";
-    previousNumber.innerText = "";
-    sign.innerText = "";
+    
+        result.innerText = "";
+        previousNumber.innerText = "";
+        arithmeticOperator.innerText = "";
+        calculus.reset();
 });
+
