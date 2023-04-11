@@ -125,14 +125,13 @@ function setResultAddOperator(operator) {
                         result.innerText = "";
                         previousNumber.innerText = calculus.number1;
                         arithmeticOperator.innerText = calculus.operator;
-                        body.style.backgroundColor = "yellow";
+                        body.style.backgroundColor = "orange";
 
                     } else {
 
                         updateOperator(operator);
-
+                        body.style.backgroundColor = "pink";
                     }
-    
                 }
             }
     
@@ -140,28 +139,37 @@ function setResultAddOperator(operator) {
     
             if (result.innerText !== "" && previousNumber.innerText !== "") {
     
+                body.style.backgroundColor = "black";
                 updateOperator(operator);
                 
             } else console.log("Only one arithmetic operator at a time !");
         }
     }
-
 }
 
-function updateNumber(number, Calculator) {
+function updateNumber(number) {
 
-    if (Calculator.obtained) {
+    if (result.innerText !== "" && arithmeticOperator.innerText === "" && previousNumber.innerText === "") {
 
-        Calculator.setNumber1(result.innerText);
-        Calculator.obtained = false;
-        previousNumber.innerText = Calculator.number1;
-        result.innerText = number;
+        body.style.backgroundColor = "red";
+        console.log("Define arithmetic operator first !");
 
     } else {
 
-        result.innerText += number;
+        if (calculus.obtained) {
+
+            console.log("avant op" + calculus.number1);
+            previousNumber.innerText = calculus.number1;
+            result.innerText = number;
+            console.log(calculus.number1);
+            console.info(calculus.number2);
+
+
+           
+        } else {
+            result.innerText += number;
+        }
     }
-  
 }
 
 function setResult() {
@@ -172,8 +180,8 @@ function setResult() {
     result.innerText = calculus.number1;
     previousNumber.innerText = "";
     arithmeticOperator.innerText = "";
-    console.info("num1 :" + calculus.number1);
-    console.info("num2 :" + calculus.number2);
+    console.info("num1 = " + calculus.number1);
+    console.info("num2 = " + calculus.number2);
 }
 
 function updateOperator(operator) {
@@ -188,16 +196,16 @@ function updateOperator(operator) {
     body.style.backgroundColor = "green";
 }
 
-one.addEventListener("click", () => updateNumber("1", calculus));
-two.addEventListener("click", () => updateNumber("2", calculus));
-three.addEventListener("click", () => updateNumber("3", calculus));
-four.addEventListener("click", () => updateNumber("4", calculus));
-five.addEventListener("click", () => updateNumber("5", calculus));
-six.addEventListener("click", () => updateNumber("6", calculus));
-seven.addEventListener("click", () => updateNumber("7", calculus));
-eight.addEventListener("click", () => updateNumber("8", calculus));
-nine.addEventListener("click", () => updateNumber("9", calculus));
-zero.addEventListener("click", () => updateNumber("0", calculus));
+one.addEventListener("click", () => updateNumber("1"));
+two.addEventListener("click", () => updateNumber("2"));
+three.addEventListener("click", () => updateNumber("3"));
+four.addEventListener("click", () => updateNumber("4"));
+five.addEventListener("click", () => updateNumber("5"));
+six.addEventListener("click", () => updateNumber("6"));
+seven.addEventListener("click", () => updateNumber("7"));
+eight.addEventListener("click", () => updateNumber("8"));
+nine.addEventListener("click", () => updateNumber("9"));
+zero.addEventListener("click", () => updateNumber("0"));
     
 float.addEventListener("click", function() {
     
