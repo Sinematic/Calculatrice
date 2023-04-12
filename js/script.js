@@ -158,14 +158,9 @@ function updateNumber(number) {
 
         if (calculus.obtained) {
 
-            console.log("avant op" + calculus.number1);
             previousNumber.innerText = calculus.number1;
             result.innerText = number;
-            console.log(calculus.number1);
-            console.info(calculus.number2);
 
-
-           
         } else {
             result.innerText += number;
         }
@@ -180,8 +175,7 @@ function setResult() {
     result.innerText = calculus.number1;
     previousNumber.innerText = "";
     arithmeticOperator.innerText = "";
-    console.info("num1 = " + calculus.number1);
-    console.info("num2 = " + calculus.number2);
+    body.style.backgroundColor = "green";
 }
 
 function updateOperator(operator) {
