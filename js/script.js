@@ -149,7 +149,12 @@ function setResultAddOperator(operator) {
 
 function updateNumber(number) {
 
-    if (result.innerText !== "" && arithmeticOperator.innerText === "" && previousNumber.innerText === "") {
+    if (result.innerText === "" && previousNumber.innerText !== "" && arithmeticOperator === "") {
+
+        body.style.backgroundColor = "red";
+        console.log("Define arithmetic operator first !");
+
+    } else if (calculus.obtained && arithmeticOperator.innerText === "") {
 
         body.style.backgroundColor = "red";
         console.log("Define arithmetic operator first !");
@@ -159,6 +164,7 @@ function updateNumber(number) {
         if (calculus.obtained) {
 
             previousNumber.innerText = calculus.number1;
+            calculus.obtained = false;
             result.innerText = number;
 
         } else {
