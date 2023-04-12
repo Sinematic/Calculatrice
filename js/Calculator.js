@@ -76,12 +76,13 @@ export class Calculator {
 
     squareRoot() {
 
-        if (this.number1) {
+        if (this.number1 && this.number2 === undefined) {
 
             this.operator = undefined;
             this.number1 = Math.sqrt(this.number1);
             this.obtained = true;
-        }
+            
+        } else console.log("One and only one number is required to get square root");
     }
 
     modulo() { // Doesn't exist on current Calculator

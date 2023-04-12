@@ -117,7 +117,7 @@ function setResultAddOperator(operator) {
             } else {
     
                 if (result.innerText !== "" ) {
-    
+  
                     if (previousNumber.innerText === "") {
 
                         calculus.setNumber1(result.innerText);
