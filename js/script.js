@@ -185,15 +185,29 @@ function setResult() {
 }
 
 function updateOperator(operator) {
-    
-    calculus.setNumber1(previousNumber.innerText);
-    calculus.setNumber2(result.innerText);
-    calculus.calculate();
-    calculus.setOperator(operator);
-    arithmeticOperator.innerText = calculus.operator;
-    result.innerText = calculus.number1;
-    previousNumber.innerText = "";
-    body.style.backgroundColor = "green";
+
+    switch(operator) {
+
+        case "sqrt":
+            calculus.setNumber1(previousNumber.innerText);
+            calculus.setNumber2(previousNumber.innerText);
+            calculus.calculate();
+            calculus.setOperator(operator);
+            arithmeticOperator.innerText = calculus.operator;
+            result.innerText = calculus.number1;
+            previousNumber.innerText = "";
+            body.style.backgroundColor = "green";
+            break
+        default:
+            calculus.setNumber1(previousNumber.innerText);
+            calculus.setNumber2(result.innerText);
+            calculus.calculate();
+            calculus.setOperator(operator);
+            arithmeticOperator.innerText = calculus.operator;
+            result.innerText = calculus.number1;
+            previousNumber.innerText = "";
+            body.style.backgroundColor = "green";
+    }  
 }
 
 one.addEventListener("click", () => updateNumber("1"));
